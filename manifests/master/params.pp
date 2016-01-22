@@ -53,6 +53,7 @@ class kubernetes::master::params {
   $kube_api_token_auth_file = undef
   $kube_api_watch_cache = true
   $kube_api_extra_args = ''
+  $kube_api_cloud_provider = undef
 
   # controller manager config
   # http://kubernetes.io/v1.1/docs/admin/kube-controller-manager.html

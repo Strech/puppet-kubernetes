@@ -196,6 +196,10 @@
 #   Enable watch caching in the apiserver
 #   Default true
 #
+# [*cloud_provider*]
+#   Cloud provider matching --cloud-provider option
+#   Default undef
+#
 class kubernetes::master::apiserver (
   $service_cluster_ip_range,
   $ensure                        = $kubernetes::master::params::kube_api_service_ensure,
@@ -241,6 +245,7 @@ class kubernetes::master::apiserver (
   $token_auth_file               = $kubernetes::master::params::kube_api_token_auth_file,
   $watch_cache                   = $kubernetes::master::params::kube_api_watch_cache,
   $extra_args                    = $kubernetes::master::params::kube_api_extra_args,
+  $cloud_provider                = $kubernetes::master::params::kube_api_cloud_provider,
 ) inherits kubernetes::master::params {
   include ::kubernetes
   include ::kubernetes::master

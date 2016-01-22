@@ -26,6 +26,9 @@ KUBE_ADMISSION_CONTROL="--admission_control=<%= Array(scope['kubernetes::master:
 # Add your own!
 KUBE_API_ARGS="<% -%>
  --etcd-config=/etc/kubernetes/etcd_config.json<% -%>
+<% if @cloud_provider -%>
+ --cloud-provider=<%= scope['kubernetes::master::apiserver::cloud_provider'] -%>
+<% end -%>
 <% if @advertise_address then -%>
  --advertise-address=<%= scope['kubernetes::master::apiserver::advertise_address'] -%>
 <% end -%>
