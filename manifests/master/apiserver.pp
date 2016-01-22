@@ -256,9 +256,10 @@ class kubernetes::master::apiserver (
     force   => true,
     content => template("${module_name}/etc/kubernetes/apiserver.erb"),
   } ~> Service['kube-apiserver']
-  
+
   service { 'kube-apiserver':
     ensure => $ensure,
     enable => $enable,
+    provider => 'debian',
   }
 }
