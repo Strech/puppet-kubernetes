@@ -256,10 +256,10 @@ class kubernetes::master::apiserver (
     force   => true,
     content => template("${module_name}/etc/kubernetes/etcd_config.json.erb"),
   } ~> Service['kube-apiserver']
-  file { '/etc/kubernetes/apiserver':
+  file { '/etc/default/kube-apiserver':
     ensure  => 'file',
     force   => true,
-    content => template("${module_name}/etc/kubernetes/apiserver.erb"),
+    content => template("${module_name}/etc/default/kube-apiserver.erb"),
   } ~> Service['kube-apiserver']
 
   service { 'kube-apiserver':
