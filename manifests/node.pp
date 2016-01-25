@@ -16,6 +16,5 @@ class kubernetes::node (
   file { '/etc/kubernetes/manifests/': ensure => directory, } ->
   file { '/var/run/kubernetes/':
     ensure => directory,
-    owner  => 'kube',
   }
 }
