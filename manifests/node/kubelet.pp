@@ -193,7 +193,7 @@ class kubernetes::node::kubelet (
 ) inherits kubernetes::node::params {
   include ::kubernetes
   include ::kubernetes::node
-  
+
   if $cert_dir and ($tls_cert_file or $tls_private_key_file) {
     fail("You can't use both of cert_dir and tls_*.")
   }
@@ -205,17 +205,17 @@ class kubernetes::node::kubelet (
     file { '/etc/kubernetes/node_initial.yaml':
       ensure  => 'file',
       content => template("${module_name}/node.yaml.erb"),
-    } ->
-    exec { 'register node':
-      command => "/bin/kubectl create --server=${api_servers} -f /etc/kubernetes/node_initial.yaml",
-      unless  => "/bin/kubectl describe nodes --server=${api_servers} ${::fqdn}",
-    } ->
-    # if we configure cbr0, most probably docker will have to wait for this first to be configured,
-    exec { 'force kubelet to create cbr0':
-      command => "/bin/kubelet --runonce=true --api_servers=${api_servers} --configure-cbr0=true --enable-server=false",
-      creates => '/sys/class/net/cbr0/',
-      returns => 1,
-    } ~> Service['docker']
+    }# ->
+    # exec { 'register node':
+    #   command => "/bin/kubectl create --server=${api_servers} -f /etc/kubernetes/node_initial.yaml",
+    #   unless  => "/bin/kubectl describe nodes --server=${api_servers} ${::fqdn}",
+    # } ->
+    # # if we configure cbr0, most probably docker will have to wait for this first to be configured,
+    # exec { 'force kubelet to create cbr0':
+    #   command => "/bin/kubelet --runonce=true --api_servers=${api_servers} --configure-cbr0=true --enable-server=false",
+    #   creates => '/sys/class/net/cbr0/',
+    #   returns => 1,
+    # } ~> Service['docker']
   }
 
   File['/etc/kubernetes/config'] ~> Service['kubelet']
